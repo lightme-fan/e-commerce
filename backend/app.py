@@ -13,7 +13,7 @@ def get_db_connection():
     return db
 
 # Route to get all products data from the database
-@app.route('/all_products', methods=['GET'])
+@app.route('/products', methods=['GET'])
 def get_all_products():
     conn = get_db_connection()
     cursor = conn.cursor()
