@@ -7,7 +7,7 @@ If you are stuck on running the app, please let us know.
 Head to the instructions [here](https://docs.google.com/document/d/1Pstqo1wXu0v-ETa80WxtYkgq3ZzYiZWRV2E8UH12gHQ/edit)
 
 ## Frontend
-Your frontend code should be written in the `frontend` folder. Please add a clear instruction on how to run your code.
+Your frontend code should be written in a folder called `frontend`. Please add a clear instruction on how to run your code.
 
 ## Backend
 This is a simple backend app to perform CRUD operations on products data.
@@ -18,4 +18,4 @@ It is a simple backend server written with `Python` and using `Flask` as a light
 ## How to run the app
 1. Navigate to the `backend` folder
 1. Run `python app.py`
-1. Start working on your the frontend
+1. Start working on the frontend
