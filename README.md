@@ -4,7 +4,7 @@ Here is coding challenge to test a junior developer's skills and see if if they 
 ## Instructions:
 Developers can use whatever technologies they are familiar with so you will need to start from scratch.
 If you are stuck on running the app, please let us know.
-Head to the instructions [here]()
+Head to the instructions [here](https://docs.google.com/document/d/1Pstqo1wXu0v-ETa80WxtYkgq3ZzYiZWRV2E8UH12gHQ/edit)
 
 ## Frontend
 Your frontend code should be written in the `frontend` folder. Please add a clear instruction on how to run your code.
