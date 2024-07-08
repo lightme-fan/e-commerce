@@ -1,8 +1,8 @@
 # coding-challenge
-Here a is coding challenge to test a junior developer's skills and see if they are able to tackle challenges that an intermediate dev should be able to handle.
+Here is a coding challenge to test a junior developer's skills and see if they are able to tackle challenges that an intermediate dev can handle.
 
 ## Instructions:
-Developers can use whatever technologies they are familiar with and you will start from scratch.
+Developers can use whatever technologies they are familiar with and need to start from scratch.
 If you are stuck on running the app, please let us know.
 Head to the instructions [here](https://docs.google.com/document/d/1Pstqo1wXu0v-ETa80WxtYkgq3ZzYiZWRV2E8UH12gHQ/edit)
 
