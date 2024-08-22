@@ -34,7 +34,7 @@ const Home = () => {
                 These are the available products we have at the moment. Help yourself to find your own interests
               </p>
             </div>
-            <div className='md:flex md:flex-wrap md:justify-between gap-10'>
+            <div className='my-3 mt-12 md:flex md:flex-wrap md:justify-between gap-10'>
               {state?.products?.map(product => (
                 <ProductCard item={product}/>
               ))}
