@@ -1,28 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import './App.css';
+import { ContextProvider } from './contexts/AppContext';
+import Home from './pages/Home';
+import Product from "./pages/Product";
+import PersonalProducts from "./pages/PersonalProducts";
+import Contact from "./pages/Contact";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/products",
+    element: <Product />,
+  },
+  {
+    path: "/personal-products",
+    element: <PersonalProducts />,
+  },
+  {
+    path: "/contact",
+    element: <Contact />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+]);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1 className="text-3xl font-bold underline text-red-600">
-          Simple React Typescript Tailwind Sample
-        </h1>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className=''>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ContextProvider>
+      <RouterProvider router={router} />
+    </ContextProvider>
   );
 }
 
