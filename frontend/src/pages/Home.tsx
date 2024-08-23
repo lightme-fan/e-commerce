@@ -5,8 +5,6 @@ import ProductCard from '../components/ProductCard';
 
 const Home = () => {
   const state = useContext(GeneralContext);
-  // const { products } = state;
-  console.log("products:::::::::::::", state?.products)
 
   if (!state) {
     // Handle the null case

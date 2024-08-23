@@ -19,5 +19,7 @@ export interface ProductType {
 }
 
 export interface ContextProps {
-  products: ProductType[]
+  products: ProductType[] | null | undefined
+  numberOfLikes: number | undefined
+  handleLikes: (item: number) => void
 }
