@@ -63,4 +63,4 @@ def delete_product(product_id):
     return 'Product deleted successfully'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5000, debug=True)

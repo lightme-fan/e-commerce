@@ -3,23 +3,31 @@ export interface ContextProviderProps {
 }
 
 export interface ProductType {
-    description: String
-    id: Number
-    is_recommended: Number
-    is_sold: Number
-    location: String
-    name: String
-    number_of_likes: Number
-    owner_address: String
-    owner_email: String
-    owner_name: String
+    description: string
+    id: number
+    is_recommended: number
+    is_sold: number
+    location: string
+    name: string
+    number_of_likes: number
+    is_liked: boolean
+    owner_address: string
+    owner_email: string
+    owner_name: string
     payment_method: any
-    picture: String
-    price: String
+    picture: string
+    price: string
 }
 
 export interface ContextProps {
   products: ProductType[] | null | undefined
+  product: ProductType | null | undefined
   numberOfLikes: number | undefined
-  handleLikes: (item: number) => void
+  isLiked: boolean | undefined
+  isBuyModalOpen: boolean | undefined
+  handleLikes: (item: number, id: number) => void
+  handleDeleteProduct: (id: number) => void
+  handleBuy: (id: number) => void
+  handleCloseProductDetails: (id: number) => void
+  handleModalBuy: (id: number) => void
 }

@@ -29,7 +29,7 @@ const Header = () => {
   }, [isMenuOpen]);
   
   return (
-    <header>
+    <header className='fixed w-full bg-white shadow-md'>
       <div className='p-2 py-4 flex justify-between items-center max-w-screen-2xl m-auto'>
         <div className='flex justify-between gap-20'>
           <h1 className='flex items-center gap-2'>

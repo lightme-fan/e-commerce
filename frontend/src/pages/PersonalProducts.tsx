@@ -4,7 +4,9 @@ import Header from '../components/Header'
 const PersonalProducts = () => {
   return (
     <Fragment>
-      <Header />
+      <div className={`relative h-[100vh] overflow-y-scroll`}>
+        <Header />
+      </div>
     </Fragment>
   )
 }
