@@ -1,9 +1,7 @@
 import React, { Fragment, useContext } from 'react'
 import { GeneralContext } from '../contexts/AppContext';
-import Header from '../components/header/Header';
-import ProductCard from '../components/product/ProductCard';
-import ProductToBuy from '../components/product/ProductToBuy';
 import { Link } from 'react-router-dom';
+import { Header, ProductCard, ProductToBuy } from '../components';
 
 const Home = () => {
   const state = useContext(GeneralContext);

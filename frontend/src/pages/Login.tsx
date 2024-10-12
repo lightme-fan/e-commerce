@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import Header from '../components/header/Header'
+import React, { Fragment } from 'react';
+import { Header } from '../components';
 
 const Login = () => {
   return (
