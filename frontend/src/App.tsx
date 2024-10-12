@@ -2,12 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import './App.css';
 import { ContextProvider } from './contexts/AppContext';
-import Home from './pages/Home';
-import Product from "./pages/Product";
-import PersonalProducts from "./pages/PersonalProducts";
-import Contact from "./pages/Contact";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import { Contact, Home, Login, NewProduct, PersonalProducts, Product, Signup } from "./pages";
+
 
 const router = createBrowserRouter([
   {
@@ -21,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/personal-products",
     element: <PersonalProducts />,
+  },
+  {
+    path: "/new_product",
+    element: <NewProduct />,
   },
   {
     path: "/contact",
