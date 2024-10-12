@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import Header from '../components/header/Header'
 
 const NewProduct = () => {
   return (
-    <div>
-      New product
-    </div>
+    <Fragment>
+      <Header />
+    </Fragment>
   )
 }
 

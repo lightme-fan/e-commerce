@@ -1,5 +1,5 @@
 import React, { FC, useContext, useState } from 'react'
-import { GeneralContext } from '../contexts/AppContext';
+import { GeneralContext } from '../../contexts/AppContext';
 
 const ProductCard: FC<any> = ({ item }) => {
   const state = useContext(GeneralContext);

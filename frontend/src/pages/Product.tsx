@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import Header from '../components/Header'
+import Header from '../components/header/Header'
 
 const Product = () => {
   return (

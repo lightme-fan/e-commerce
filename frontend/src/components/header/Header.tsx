@@ -1,33 +1,12 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from "../images/shopping-cart.png";
+import logo from "../../images/shopping-cart.png";
+import useHooks from './useHooks';
+import Menu from './Menu';
 
 const Header = () => {
-  const [ isMenuOpen, setIsMenuOpen ] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const { menuRef, isMenuOpen, handleOpenMenu } = useHooks();
 
-  const handleOpenMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  }
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-      setIsMenuOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isMenuOpen]);
-  
   return (
     <header className='fixed w-full bg-white shadow-md z-50'>
       <div className='p-2 py-4 flex justify-between items-center max-w-screen-2xl m-auto'>
@@ -62,19 +41,3 @@ const Header = () => {
 }
 
 export default Header;
-
-const Menu: FC<any> = ({ className, linkStyle, isMenuOpen }) => {
-  return (
-    <ul className={className}>
-      <li><Link to={"/products"} className={linkStyle}>Products</Link></li>
-      <li><Link to={"/personal-products"} className={linkStyle}>Personal Products</Link></li>
-      <li><Link to={"/contact"} className={linkStyle}>Contact</Link></li>
-      {isMenuOpen && (
-        <>
-          <li><Link to={"/login"} className={linkStyle}>Login</Link></li>
-          <li><Link to={"/signup"} className={linkStyle}>Sign up</Link></li>
-        </>
-      )}
-    </ul>
-  )
-}

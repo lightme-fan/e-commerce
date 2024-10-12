@@ -1,8 +1,8 @@
 import React, { Fragment, useContext } from 'react'
 import { GeneralContext } from '../contexts/AppContext';
-import Header from '../components/Header';
-import ProductCard from '../components/ProductCard';
-import ProductToBuy from '../components/ProductToBuy';
+import Header from '../components/header/Header';
+import ProductCard from '../components/product/ProductCard';
+import ProductToBuy from '../components/product/ProductToBuy';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
