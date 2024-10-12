@@ -25,8 +25,9 @@ const ProductCard: FC<any> = ({ item }) => {
         <div className='text-slate-600 my-3 flex items-center justify-between flex-wrap'>
           <div className='text-slate-600 text-lg'>{item?.price}</div>
           <button 
-            className={`w-60 py-3 rounded-md ${item?.id === item?.is_sold ? "bg-[#65a30d]" : " bg-blue-500"} text-white hover:bg-gray-200 hover:text-slate-600`}
+            className={`w-60 py-3 rounded-md ${item?.id === item?.is_sold ? "bg-[#65a30d]	cursor-not-allowed hover:bg-[#65a30d] hover:text-white" : " bg-blue-500"} text-white hover:bg-blue-700`}
             onClick={() => state?.handleBuy(item?.id)}
+            disabled={item?.id === item?.is_sold}
           >
             {item?.id === item?.is_sold ? "Already sold" : "Buy"}
           </button>

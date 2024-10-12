@@ -10,11 +10,13 @@ const initialContextValue: ContextProps = {
   numberOfLikes: 0,
   isLiked: false,
   isBuyModalOpen: false,
+  isAddProductModalOpen: false,
   handleLikes: () => {},
   handleDeleteProduct: () => {},
   handleBuy: () => {},
   handleCloseProductDetails: () => {},
   handleModalBuy: () => {},
+  handleAddProduct: () => {},
 };
 
 const GeneralContext = createContext<ContextProps | null>(initialContextValue);
@@ -25,10 +27,9 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
   const getProducts = async () => {
     try {
       const response = await axios.get(`${API_URL}/products`);
-      const updatedProducts = response?.data?.products?.map((product: any) => ({...product, is_liked: false}))
       setState(prevState => prevState && ({
         ...prevState,
-        products: updatedProducts || [],
+        products: response?.data?.products || [],
       }));
     } catch (error) {
       console.error("Failed to fetch products:", error);
@@ -61,6 +62,11 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     setState(prevState => prevState && ({...prevState, products: updatedProducts}));
   }
 
+  const handleAddProduct = () => {
+    console.log("Adding products");
+    
+  }
+
   const handleDeleteProduct = async (id: number) => {
     await axios.delete(`${API_URL}/product/${id}`);
     setState(prev => prev && ({
@@ -89,12 +95,17 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     }))
   }
 
-  const handleModalBuy = (id: number) => {
+  const handleModalBuy = async (id: number) => {
+    let updatedProduct = state?.products?.find(product => product?.id === id)
+    updatedProduct = updatedProduct && {...updatedProduct, is_sold: id}
+
+    await axios.put(`${API_URL}/product/${id}`, updatedProduct);
+    
     setState(prev => prev && ({
       ...prev,
-      products: prev?.products?.map(product => ({...product, is_sold: product?.id === id ? id : product?.is_sold})),
       isBuyModalOpen: false
     }))
+    
   }
 
   useEffect(() => {
@@ -107,11 +118,13 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     numberOfLikes: state?.numberOfLikes,
     isLiked: state?.isLiked,
     isBuyModalOpen: state?.isBuyModalOpen,
+    isAddProductModalOpen: state?.isAddProductModalOpen,
     handleLikes: handleLikes,
     handleDeleteProduct: handleDeleteProduct,
     handleBuy: handleBuy,
     handleCloseProductDetails: handleCloseProductDetails,
     handleModalBuy: handleModalBuy,
+    handleAddProduct: handleAddProduct,
   }
 
   return (

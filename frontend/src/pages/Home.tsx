@@ -3,6 +3,7 @@ import { GeneralContext } from '../contexts/AppContext';
 import Header from '../components/Header';
 import ProductCard from '../components/ProductCard';
 import ProductToBuy from '../components/ProductToBuy';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const state = useContext(GeneralContext);
@@ -27,8 +28,19 @@ const Home = () => {
               </p>
             </div>
           </section>
-          <section>
-            <div className='p-2 py-8 max-w-screen-2xl m-auto'>
+          <section className='p-2 py-8 max-w-screen-2xl m-auto flex md:flex-col flex-col-reverse '>
+            {/* <button 
+              className='md:self-end self-center w-40 mt-2 py-1.5 hover:bg-gray-200 hover:text-slate-600 rounded-md bg-blue-500 text-white'
+              onClick={state.handleAddProduct}
+            >
+            </button> */}
+              <Link 
+                to={"/new_product"} 
+                className='md:self-end self-center w-40 mt-2 py-2.5 hover:bg-blue-700 rounded-md bg-blue-500 text-white text-center'
+              >
+                Add Product
+              </Link>
+            <div>
               <div>
                 <h1 className='text-center text-2xl text-slate-600'>All products</h1>
                 <p className='text-center text-md text-slate-600 my-4 max-w-[530px] m-auto'>

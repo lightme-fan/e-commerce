@@ -29,7 +29,7 @@ const Header = () => {
   }, [isMenuOpen]);
   
   return (
-    <header className='fixed w-full bg-white shadow-md'>
+    <header className='fixed w-full bg-white shadow-md z-50'>
       <div className='p-2 py-4 flex justify-between items-center max-w-screen-2xl m-auto'>
         <div className='flex justify-between gap-20'>
           <h1 className='flex items-center gap-2'>
@@ -54,7 +54,7 @@ const Header = () => {
         </div>
         <div className='hidden md:flex mt-1 w-[180px] gap-2'>
           <Link to="/login" className='block w-full px-4 py-1.5 hover:bg-gray-200 text-slate-600 rounded-md border'>Log in</Link>
-          <Link to="/signup" className='block w-full px-4 py-1.5 hover:bg-gray-200 hover:text-slate-600 rounded-md bg-blue-500 text-white'>Sign up</Link>
+          <Link to="/signup" className='block w-full px-4 py-1.5 hover:bg-blue-700 rounded-md bg-blue-500 text-white'>Sign up</Link>
         </div>
       </div>
     </header>
