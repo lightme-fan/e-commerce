@@ -63,8 +63,7 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
   }
 
   const handleAddProduct = () => {
-    console.log("Adding products");
-    
+    console.log("Adding products");    
   }
 
   const handleDeleteProduct = async (id: number) => {

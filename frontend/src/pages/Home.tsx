@@ -6,7 +6,8 @@ import { Header, ProductCard, ProductToBuy } from '../components';
 const Home = () => {
   const state = useContext(GeneralContext);
   // const { name , price} = state?.product;
-
+  console.log("state?.products", state?.products);
+  
   if (!state) {
     // Handle the null case
     console.error('MyContext is null');
