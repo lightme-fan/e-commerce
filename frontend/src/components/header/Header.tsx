@@ -1,4 +1,3 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from "../../images/shopping-cart.png";
 import useHooks from './useHooks';
