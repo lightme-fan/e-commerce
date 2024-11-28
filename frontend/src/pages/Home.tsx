@@ -6,13 +6,6 @@ import { Header, ProductCard, ProductToBuy } from '../components';
 const Home = () => {
   const state = useContext(GeneralContext);
   // const { name , price} = state?.product;
-  console.log("state?.products", state?.products);
-  
-  if (!state) {
-    // Handle the null case
-    console.error('MyContext is null');
-    return null;
-  }
 
   return (
     <Fragment>
@@ -28,11 +21,6 @@ const Home = () => {
             </div>
           </section>
           <section className='p-2 py-8 max-w-screen-2xl m-auto flex md:flex-col flex-col-reverse '>
-            {/* <button 
-              className='md:self-end self-center w-40 mt-2 py-1.5 hover:bg-gray-200 hover:text-slate-600 rounded-md bg-blue-500 text-white'
-              onClick={state.handleAddProduct}
-            >
-            </button> */}
               <Link 
                 to={"/new_product"} 
                 className='md:self-end self-center w-40 mt-2 py-2.5 hover:bg-blue-700 rounded-md bg-blue-500 text-white text-center'

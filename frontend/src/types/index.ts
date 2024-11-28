@@ -33,3 +33,12 @@ export interface ContextProps {
   handleModalBuy: (id: number) => void
   handleAddProduct: () => void
 }
+
+
+export interface InputProps {
+  type: string
+  id: string | undefined
+  name: string
+  label: string
+  key: number | string | undefined | null
+}

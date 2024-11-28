@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import Input from '../input/Input';
 
 const ProductToBuy = ({ state }) => {
   const ref = useRef(null);
@@ -29,18 +30,27 @@ const ProductToBuy = ({ state }) => {
         <i className="fa fa-times" aria-hidden="true"></i>
       </button>
       <div className='flex flex-col gap-2.5'>
-        <div>
-          <label htmlFor="name" className='text-slate-600'>Name</label>
-          <input type="text" id='name' className='p-3 rounded-md w-full border' />
-        </div>
-        <div>
-          <label htmlFor="email" className='text-slate-600'>Email address</label>
-          <input type="email" id="email" className='p-3 rounded-md w-full border' />
-        </div>
-        <div>
-          <label htmlFor="tel" className='text-slate-600'>Phone number</label>
-          <input type="tel" id="tel" className='p-3 rounded-md w-full border' />
-        </div>
+        <Input
+          type='text'
+          id='name'
+          label='Name'
+          name='name'
+          key={"name"}
+        />
+        <Input
+          type='email'
+          id='email'
+          label='Email'
+          name='email'
+          key={"email"}
+        />
+        <Input
+          type='tel'
+          id='tel'
+          label='Phone number'
+          name='tel'
+          key={"tel"}
+        />
         <div className='flex flex-col'>
           <label htmlFor="payment" className='text-slate-600'>Payment method</label>
           <select name="pets" id="payment" className='p-3 rounded-md w-full border bg-[#fff]'>
@@ -49,7 +59,7 @@ const ProductToBuy = ({ state }) => {
             <option value="orange-money" className='text-slate-600'>Orange Money</option>
           </select>
         </div>
-        <button 
+        <button
           className={`w-60 py-3 rounded-md bg-blue-500 text-white hover:bg-blue-700`}
           onClick={() => state?.handleModalBuy(state?.product?.id)}
         >

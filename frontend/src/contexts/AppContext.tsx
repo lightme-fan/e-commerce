@@ -126,6 +126,12 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     handleAddProduct: handleAddProduct,
   }
 
+  if (!state) {
+    // Handle the null case
+    console.error('MyContext is null');
+    return null;
+  }
+
   return (
     <GeneralContext.Provider value={contextValue}>
       {children}
