@@ -21,12 +21,12 @@ const Home = () => {
             </div>
           </section>
           <section className='p-2 py-8 max-w-screen-2xl m-auto flex md:flex-col flex-col-reverse '>
-              <Link 
-                to={"/new_product"} 
-                className='md:self-end self-center w-40 mt-2 py-2.5 hover:bg-blue-700 rounded-md bg-blue-500 text-white text-center'
-              >
-                Add Product
-              </Link>
+            <Link
+              to={"/new_product"}
+              className='md:self-end self-center w-40 mt-2 py-2.5 hover:bg-blue-700 rounded-md bg-blue-500 text-white text-center'
+            >
+              Add Product
+            </Link>
             <div>
               <div>
                 <h1 className='text-center text-2xl text-slate-600'>All products</h1>
@@ -36,7 +36,7 @@ const Home = () => {
               </div>
               <div className='my-3 mt-12 md:flex md:flex-wrap md:justify-center gap-10'>
                 {state?.products?.map(product => (
-                  <ProductCard item={product}/>
+                  <ProductCard item={product} />
                 ))}
               </div>
             </div>

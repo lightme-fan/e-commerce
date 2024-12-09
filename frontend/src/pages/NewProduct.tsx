@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Header, Input } from '../components'
 import { capitalizeFirstLetter } from '../utils/utils';
+import { Link } from 'react-router-dom';
 
 const NewProduct = () => {
   const newProduct = [
@@ -22,14 +23,14 @@ const NewProduct = () => {
     <Fragment>
       <div className={`relative h-[100vh] overflow-y-scroll`}>
         <Header />
-        <div className='mt-[10%] max-w-[1300px] w-full mx-auto'>
-          <div className='flex justify-between gap-y-20 flex-wrap'>
+        <div className='my-36 max-w-[1300px] w-full mx-auto px-4'>
+          <div className='flex flex-col justify-between items-center gap-y-20 md:flex-row md:justify-center md:items-start md:gap-x-20'>
             <div className='max-w-[600px] w-full'>
               <h1 className='mb-5 text-center text-2xl'>New Product</h1>
               <div className='flex flex-col gap-4'>
                 {newProduct.map((prod, index) => (
                   <Input
-                    key={prod.name}
+                    key={`product.${index}.${prod.name}`}
                     type={prod.type === "String" ? "text" : prod.type === "Boolean" ? "checkbox" : "number"}
                     id={prod.name}
                     name={prod.name}
@@ -43,7 +44,7 @@ const NewProduct = () => {
               <div className='flex flex-col gap-4'>
                 {productOwner.map((prod, index) => (
                   <Input
-                    key={prod.name}
+                    key={`owner.${index}.${prod.name}`}
                     type={prod.type === "String" ? "text" : prod.type === "Boolean" ? "checkbox" : "number"}
                     id={prod.name}
                     name={prod.name}
@@ -53,17 +54,18 @@ const NewProduct = () => {
               </div>
             </div>
           </div>
-          <div className='mt-8 flex gap-4'>
+          <div className='mt-8 flex justify-center gap-4 md:justify-start'>
             <button
               className='md:self-end self-center w-40 mt-2 py-2.5 hover:bg-blue-700 rounded-md bg-blue-500 text-white text-center'
             >
               Add Product
             </button>
-            <button
+            <Link
               className='md:self-end self-center w-40 mt-2 py-2 border border-red-400 hover:bg-red-400 rounded-md bg-transparent text-center'
+              to={"/"}
             >
               Cancel
-            </button>
+            </Link>
           </div>
         </div>
       </div>
