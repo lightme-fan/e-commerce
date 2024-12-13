@@ -7,6 +7,16 @@ const API_URL = "http://127.0.0.1:5000"
 const initialContextValue: ContextProps = {
   products: [],
   product: null,
+  productState: {
+    picture: null,
+    name: "",
+    description: "",
+    price: "",
+    address: "",
+    username: "",
+    location: "",
+    email: ""
+  },
   numberOfLikes: 0,
   isLiked: false,
   isBuyModalOpen: false,
@@ -27,6 +37,8 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
   const getProducts = async () => {
     try {
       const response = await axios.get(`${API_URL}/products`);
+      console.log("response?.data?.products:::::::::::", response?.data?.products);
+      
       setState(prevState => prevState && ({
         ...prevState,
         products: response?.data?.products || [],
@@ -114,6 +126,7 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
   const contextValue = {
     products: state?.products,
     product: state?.product,
+    productState: state?.productState,
     numberOfLikes: state?.numberOfLikes,
     isLiked: state?.isLiked,
     isBuyModalOpen: state?.isBuyModalOpen,

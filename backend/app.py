@@ -62,5 +62,42 @@ def delete_product(product_id):
     conn.close()
     return 'Product deleted successfully'
 
+# Route to add a new product
+@app.route('/product', methods=['POST'])
+def add_product():
+    # Get the new product data from the request
+    new_product_data = request.get_json()
+    
+    # Ensure all required fields are included
+    required_fields = ['description', 'name', 'is_recommended', 'is_sold', 'location', 
+                        'number_of_likes', 'owner_address', 'owner_email', 'owner_name', 
+                        'payment_method', 'picture', 'price']
+    
+    if not all(field in new_product_data for field in required_fields):
+        return jsonify({'error': 'Missing required fields'}), 400
+
+    # Connect to the database
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Insert the new product into the database
+    cursor.execute('''
+        INSERT INTO products (description, name, is_recommended, is_sold, location, 
+                              number_of_likes, owner_address, owner_email, owner_name, 
+                              payment_method, picture, price) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (new_product_data['description'], new_product_data['name'], new_product_data['is_recommended'],
+          new_product_data['is_sold'], new_product_data['location'], new_product_data['number_of_likes'],
+          new_product_data['owner_address'], new_product_data['owner_email'], new_product_data['owner_name'],
+          new_product_data['payment_method'], new_product_data['picture'], new_product_data['price']))
+
+    # Commit the transaction and close the connection
+    conn.commit()
+    conn.close()
+
+    # Return a success response with the new product ID
+    return jsonify({'message': 'Product added successfully', 'id': cursor.lastrowid}), 201
+
+
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

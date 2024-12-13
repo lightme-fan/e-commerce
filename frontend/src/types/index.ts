@@ -19,9 +19,21 @@ export interface ProductType {
     price: string
 }
 
+export interface ProductStateType {
+  description: string | any
+  name: string
+  location: string
+  username: string
+  address: string
+  email: string
+  picture: string | null | any
+  price: string
+}
+
 export interface ContextProps {
   products: ProductType[] | null | undefined
   product: ProductType | null | undefined
+  productState: ProductStateType | null | undefined
   numberOfLikes: number | undefined
   isLiked: boolean | undefined
   isBuyModalOpen: boolean | undefined
@@ -41,4 +53,7 @@ export interface InputProps {
   name: string
   label: string
   key: number | string | undefined | null
+  value: number | string | boolean | any | null
+  onChange: (event: any) => void
+  style?: any
 }
