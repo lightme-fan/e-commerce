@@ -36,15 +36,12 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get(`${API_URL}/products`);
-      console.log("response?.data?.products:::::::::::", response?.data?.products);
-      
+      const response = await axios.get(`${API_URL}/products`);      
       setState(prevState => prevState && ({
         ...prevState,
         products: response?.data?.products || [],
       }));
     } catch (error) {
-      console.error("Failed to fetch products:", error);
       setState(prevState => prevState && ({
         ...prevState,
         products: [],
@@ -74,8 +71,31 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     setState(prevState => prevState && ({...prevState, products: updatedProducts}));
   }
 
-  const handleAddProduct = () => {
-    console.log("Adding products");    
+  const handleAddProduct = (product: any) => {
+    let imageUrl = product?.picture && URL.createObjectURL(product?.picture);
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      imageUrl = e.target.result;
+    };
+    
+    reader.readAsDataURL(product?.picture);
+
+    const productToAdd = {
+      name: product?.name,
+      description: product?.description,
+      is_recommended: 0,
+      is_sold: 0,
+      location: product?.location,
+      number_of_likes: 0,
+      owner_address: product?.address,
+      owner_email: product?.email,
+      owner_name: product?.username,
+      payment_method: null,
+      picture: imageUrl,
+      price: product?.price
+    }
+
+    console.log("productToAdd:::::", productToAdd);
   }
 
   const handleDeleteProduct = async (id: number) => {
@@ -138,6 +158,9 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     handleModalBuy: handleModalBuy,
     handleAddProduct: handleAddProduct,
   }
+
+  console.log("state::::::::::::::", state?.products);
+  
 
   if (!state) {
     // Handle the null case

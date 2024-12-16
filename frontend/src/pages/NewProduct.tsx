@@ -1,33 +1,36 @@
 import { Fragment, useContext, useState } from "react";
 import { Header, Input } from "../components";
-import { capitalizeFirstLetter } from "../utils/utils";
+import { capitalizeFirstLetter, checkEmptyValue } from "../utils/utils";
 import { Link } from "react-router-dom";
 import { GeneralContext } from "../contexts/AppContext";
 
-const productDetails = [
-  { name: "name", value: "", type: "String", type_id: "product" },
-  { name: "description", value: "", type: "String", type_id: "product" },
-  { name: "price", value: "", type: "String", type_id: "product" },
-  { name: "picture", value: "", type: "String", type_id: "product" },
-  { name: "address", value: "", type: "String", type_id: "owner" },
-  { name: "email", value: "", type: "Email", type_id: "owner" },
-  { name: "username", value: "", type: "String", type_id: "owner" },
-  { name: "location", value: "", type: "String", type_id: "owner" },
+const productsDetails = [
+  { name: "name", value: "", type: "String", type_id: "product", error: "" },
+  { name: "description", value: "", type: "String", type_id: "product", error: "" },
+  { name: "price", value: "", type: "String", type_id: "product", error: "" },
+  { name: "picture", value: "", type: "String", type_id: "product", error: "" },
+  { name: "address", value: "", type: "String", type_id: "owner", error: "" },
+  { name: "email", value: "", type: "Email", type_id: "owner", error: "" },
+  { name: "username", value: "", type: "String", type_id: "owner", error: "" },
+  { name: "location", value: "", type: "String", type_id: "owner", error: "" },
 ];
 
 const NewProduct = () => {
   const state = useContext(GeneralContext);
+  const [productDetails, setProductDetails] = useState(productsDetails);
   const [product, setProduct] = useState<any>({
     picture: null,
     name: "",
-    discription: "",
+    description: "",
     price: "",
     address: "",
+    email: "",
     username: "",
     location: "",
   });
 
   const handleInputChange = (event: any, name: string) => {
+    setProductDetails(productsDetails);
     setProduct((prev: any) => ({
       ...prev,
       [name]: name === "picture" ?  event.target.files[0] : event.target.value,
@@ -36,6 +39,47 @@ const NewProduct = () => {
 
   const handleClearPictureValue = () => {
     setProduct((prev: any) => ({...prev, picture: null}));
+  }
+
+  const handleAddNewProduct = () => {
+    let imageUrl = product?.picture && URL.createObjectURL(product?.picture);
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      imageUrl = e.target.result;
+    };
+    
+    reader.readAsDataURL(product?.picture);
+
+    const productToAdd = {
+      name: product?.name,
+      description: product?.description,
+      is_recommended: 0,
+      is_sold: 0,
+      location: product?.location,
+      number_of_likes: 0,
+      owner_address: product?.address,
+      owner_email: product?.email,
+      owner_name: product?.username,
+      payment_method: null,
+      picture: imageUrl,
+      price: product?.price
+    }
+
+    const fieldsWithoutValue = checkEmptyValue(productToAdd);
+
+    if (fieldsWithoutValue.length > 0) {      
+      const updatedProductDetails = productsDetails.map(prod => {
+        if (fieldsWithoutValue.includes(prod.name)) {
+          return { ...prod, error: `Empty value! Please add your ${prod.name}!` }; // Add newProperty if name matches
+        }
+        return prod;
+      });
+      setProductDetails(updatedProductDetails);
+    } else {
+
+      console.log("Successfully added:::::");
+    }
+    
   }
 
   return (
@@ -61,6 +105,7 @@ const NewProduct = () => {
                             name={prod.name}
                             className="p-3 rounded-md w-full border"
                           />
+                          <div className="text-red-500 italic text-sm">{prod?.error}</div>
                         </div>
                       ) : (
                         <div className="relative">
@@ -75,10 +120,13 @@ const NewProduct = () => {
                                 ? "number"
                                 : prod.type === "Boolean"
                                 ? "checkbox"
+                                : prod.type === "Email"
+                                ? "email"
                                 : "text"
                             }
                             id={prod.name}
                             name={prod.name}
+                            error={prod?.error}
                             label={capitalizeFirstLetter(prod.name)}
                             value={prod.name === "picture" && product["picture"] ? product["picture"]?.name : product[prod.name]}
                             onChange={(event) =>
@@ -124,6 +172,7 @@ const NewProduct = () => {
                       }
                       id={prod.name}
                       name={prod.name}
+                      error={prod?.error}
                       label={capitalizeFirstLetter(prod.name)}
                       value={product[prod.name]}
                       onChange={(event) => handleInputChange(event, prod.name)}
@@ -135,7 +184,7 @@ const NewProduct = () => {
           <div className="mt-8 flex justify-center gap-4 md:justify-start">
             <button
               className="md:self-end self-center w-40 mt-2 py-2.5 hover:bg-blue-700 rounded-md bg-blue-500 text-white text-center"
-              onClick={() => state?.handleAddProduct()}
+              onClick={handleAddNewProduct}
             >
               Add Product
             </button>

@@ -43,7 +43,7 @@ export interface ContextProps {
   handleBuy: (id: number) => void
   handleCloseProductDetails: (id: number) => void
   handleModalBuy: (id: number) => void
-  handleAddProduct: () => void
+  handleAddProduct: (item: any) => void
 }
 
 
@@ -52,6 +52,7 @@ export interface InputProps {
   id: string | undefined
   name: string
   label: string
+  error?: string | undefined | null
   key: number | string | undefined | null
   value: number | string | boolean | any | null
   onChange: (event: any) => void
