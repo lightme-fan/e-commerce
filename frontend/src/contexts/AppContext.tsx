@@ -159,12 +159,8 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     handleAddProduct: handleAddProduct,
   }
 
-  console.log("state::::::::::::::", state?.products);
-  
-
   if (!state) {
     // Handle the null case
-    console.error('MyContext is null');
     return null;
   }
 

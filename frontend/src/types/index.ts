@@ -57,4 +57,5 @@ export interface InputProps {
   value: number | string | boolean | any | null
   onChange: (event: any) => void
   style?: any
+  placeHolder?: any
 }

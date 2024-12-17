@@ -1,18 +1,19 @@
 import { Fragment, useContext, useState } from "react";
 import { Header, Input } from "../components";
-import { capitalizeFirstLetter, checkEmptyValue } from "../utils/utils";
+import { capitalizeFirstLetter, checkEmptyValue, errorMessage } from "../utils/utils";
 import { Link } from "react-router-dom";
 import { GeneralContext } from "../contexts/AppContext";
+import { toast } from "react-toastify";
 
 const productsDetails = [
-  { name: "name", value: "", type: "String", type_id: "product", error: "" },
-  { name: "description", value: "", type: "String", type_id: "product", error: "" },
-  { name: "price", value: "", type: "String", type_id: "product", error: "" },
-  { name: "picture", value: "", type: "String", type_id: "product", error: "" },
-  { name: "address", value: "", type: "String", type_id: "owner", error: "" },
-  { name: "email", value: "", type: "Email", type_id: "owner", error: "" },
-  { name: "username", value: "", type: "String", type_id: "owner", error: "" },
-  { name: "location", value: "", type: "String", type_id: "owner", error: "" },
+  { name: "name", value: "", type: "text", type_id: "product", error: "" },
+  { name: "description", value: "", type: "text", type_id: "product", error: "" },
+  { name: "price", value: "", type: "text", type_id: "product", error: "" },
+  { name: "picture", value: "", type: "text", type_id: "product", error: "" },
+  { name: "address", value: "", type: "text", type_id: "owner", error: "" },
+  { name: "email", value: "", type: "email", type_id: "owner", error: "" },
+  { name: "username", value: "", type: "text", type_id: "owner", error: "" },
+  { name: "location", value: "", type: "text", type_id: "owner", error: "" },
 ];
 
 const NewProduct = () => {
@@ -30,10 +31,18 @@ const NewProduct = () => {
   });
 
   const handleInputChange = (event: any, name: string) => {
+    const triggeredName = name === "email"
+      ? "owner_email"
+      : name === "address"
+      ? "owner_address"
+      : name === "username"
+      ? "owner_name"
+      : name
+    
     setProductDetails(productsDetails);
     setProduct((prev: any) => ({
       ...prev,
-      [name]: name === "picture" ?  event.target.files[0] : event.target.value,
+      [triggeredName]: triggeredName === "picture" ?  event.target.files[0] : event.target.value,
     }));
   };
 
@@ -57,31 +66,37 @@ const NewProduct = () => {
       is_sold: 0,
       location: product?.location,
       number_of_likes: 0,
-      owner_address: product?.address,
-      owner_email: product?.email,
-      owner_name: product?.username,
+      owner_address: product?.owner_address,
+      owner_email: product?.owner_email,
+      owner_name: product?.owner_name,
       payment_method: null,
       picture: imageUrl,
       price: product?.price
     }
 
-    const fieldsWithoutValue = checkEmptyValue(productToAdd);
+    const fieldsWithoutValue = checkEmptyValue(productToAdd);    
 
-    if (fieldsWithoutValue.length > 0) {      
-      const updatedProductDetails = productsDetails.map(prod => {
-        if (fieldsWithoutValue.includes(prod.name)) {
-          return { ...prod, error: `Empty value! Please add your ${prod.name}!` }; // Add newProperty if name matches
-        }
-        return prod;
-      });
+    if (fieldsWithoutValue.length > 0) {
+      const errorItems = fieldsWithoutValue?.map(item => item === "owner_address" ? "address" : item === "owner_name" ? "username" : item === "owner_email" ? "email" : item);
+      const updatedProductDetails = productsDetails.map(prod => ({ 
+        ...prod, 
+        error: errorItems?.includes(prod?.name) ? `Empty value! Please add your ${prod.name}!` : "" 
+      }));
+
       setProductDetails(updatedProductDetails);
+      errorMessage(
+        toast,
+        capitalizeFirstLetter(fieldsWithoutValue.length === 1
+          ? "A field is not filled! Please, fill it out!"
+          : "Some fields are not filled! Please, fill them out!"
+        )
+      );
     } else {
 
       console.log("Successfully added:::::");
-    }
-    
+    }    
   }
-
+  
   return (
     <Fragment>
       <div className={`relative h-[100vh] overflow-y-scroll`}>
@@ -104,6 +119,8 @@ const NewProduct = () => {
                             id={prod.name}
                             name={prod.name}
                             className="p-3 rounded-md w-full border"
+                            value={product[prod.name]}
+                            onChange={(event) => handleInputChange(event, prod.name)}
                           />
                           <div className="text-red-500 italic text-sm">{prod?.error}</div>
                         </div>
@@ -114,25 +131,22 @@ const NewProduct = () => {
                             type={
                               prod.name === "picture" && !product[prod.name]
                                 ? "file"
-                                : prod.name === "picture" && product[prod.name] 
-                                ? "text"
-                                : prod.type === "Number"
-                                ? "number"
-                                : prod.type === "Boolean"
-                                ? "checkbox"
-                                : prod.type === "Email"
-                                ? "email"
-                                : "text"
+                                : prod.type.toLocaleLowerCase()
                             }
                             id={prod.name}
                             name={prod.name}
                             error={prod?.error}
                             label={capitalizeFirstLetter(prod.name)}
-                            value={prod.name === "picture" && product["picture"] ? product["picture"]?.name : product[prod.name]}
+                            value={
+                              prod.name === "picture" && product["picture"] 
+                              ? product["picture"]?.name 
+                              : product[prod.name]
+                            }
                             onChange={(event) =>
                               handleInputChange(event, prod.name)
                             }
                             style={{ pointerEvents: prod.name === "picture" && product["picture"] && "none" }}
+                            placeHolder={prod?.name === "email" && ".+@example\.com"}
                           />
                           {prod.name === "picture" && product["picture"] && (
                             <button
@@ -163,18 +177,19 @@ const NewProduct = () => {
                   .map((prod, index) => (
                     <Input
                       key={`owner.${index}.${prod.name}`}
-                      type={
-                        prod.type === "String"
-                          ? "text"
-                          : prod.type === "Boolean"
-                          ? "checkbox"
-                          : "number"
-                      }
+                      type={prod.type}
                       id={prod.name}
                       name={prod.name}
                       error={prod?.error}
                       label={capitalizeFirstLetter(prod.name)}
-                      value={product[prod.name]}
+                      value={prod.name === "address"
+                        ? product["owner_address"]
+                        : prod.name === "email"
+                        ? product["owner_email"]
+                        : prod.name === "username"
+                        ? product["owner_name"]
+                        : product[prod.name]
+                      }
                       onChange={(event) => handleInputChange(event, prod.name)}
                     />
                   ))}
