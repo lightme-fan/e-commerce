@@ -1,7 +1,7 @@
 import { Fragment, useContext, useState } from "react";
 import { Header, Input } from "../components";
 import { capitalizeFirstLetter, checkEmptyValue, errorMessage } from "../utils/utils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GeneralContext } from "../contexts/AppContext";
 import { toast } from "react-toastify";
 
@@ -17,6 +17,7 @@ const productsDetails = [
 ];
 
 const NewProduct = () => {
+  const navigate = useNavigate();
   const state = useContext(GeneralContext);
   const [productDetails, setProductDetails] = useState(productsDetails);
   const [product, setProduct] = useState<any>({
@@ -77,7 +78,10 @@ const NewProduct = () => {
     const fieldsWithoutValue = checkEmptyValue(productToAdd);    
 
     if (fieldsWithoutValue.length > 0) {
-      const errorItems = fieldsWithoutValue?.map(item => item === "owner_address" ? "address" : item === "owner_name" ? "username" : item === "owner_email" ? "email" : item);
+      const errorItems = fieldsWithoutValue?.map(item => 
+        item === "owner_address" ? "address" : item === "owner_name" ? "username" : item === "owner_email" ? "email" : item
+      );
+      
       const updatedProductDetails = productsDetails.map(prod => ({ 
         ...prod, 
         error: errorItems?.includes(prod?.name) ? `Empty value! Please add your ${prod.name}!` : "" 
@@ -92,9 +96,9 @@ const NewProduct = () => {
         )
       );
     } else {
-
-      console.log("Successfully added:::::");
-    }    
+      state?.handleAddProduct(productToAdd);
+      navigate("/");
+    }
   }
   
   return (
@@ -198,8 +202,9 @@ const NewProduct = () => {
           </div>
           <div className="mt-8 flex justify-center gap-4 md:justify-start">
             <button
-              className="md:self-end self-center w-40 mt-2 py-2.5 hover:bg-blue-700 rounded-md bg-blue-500 text-white text-center"
+              className={`md:self-end self-center w-40 mt-2 py-2.5 ${!product["picture"] ? "bg-gray-400" : "hover:bg-blue-700" } rounded-md ${!product["picture"] ? "bg-gray-400" : "bg-blue-500"} text-white text-center ${!product["picture"] ? "cursor-not-allowed" : "cursor-pointer"}`}
               onClick={handleAddNewProduct}
+              disabled={!product["picture"]}
             >
               Add Product
             </button>

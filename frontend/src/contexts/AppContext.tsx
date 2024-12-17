@@ -1,6 +1,8 @@
 import { createContext, FC, useEffect, useState } from "react";
 import { ContextProps, ContextProviderProps } from "../types";
 import axios from "axios";
+import { errorMessage, successMessage } from "../utils/utils";
+import { toast } from "react-toastify";
 
 const API_URL = "http://127.0.0.1:5000"
 
@@ -71,31 +73,22 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     setState(prevState => prevState && ({...prevState, products: updatedProducts}));
   }
 
-  const handleAddProduct = (product: any) => {
-    let imageUrl = product?.picture && URL.createObjectURL(product?.picture);
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      imageUrl = e.target.result;
-    };
-    
-    reader.readAsDataURL(product?.picture);
+  const handleAddProduct = async (product: any) => {
+    try {
+      const response = await axios.post(`${API_URL}/product`, product, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    const productToAdd = {
-      name: product?.name,
-      description: product?.description,
-      is_recommended: 0,
-      is_sold: 0,
-      location: product?.location,
-      number_of_likes: 0,
-      owner_address: product?.address,
-      owner_email: product?.email,
-      owner_name: product?.username,
-      payment_method: null,
-      picture: imageUrl,
-      price: product?.price
+      setState((prev) => prev && ({
+        ...prev,
+        products: response?.data?.products
+      }))
+      successMessage(toast, response?.data?.message);
+    } catch (error) {
+      errorMessage(toast, `An error is rising while adding a product!`);
     }
-
-    console.log("productToAdd:::::", productToAdd);
   }
 
   const handleDeleteProduct = async (id: number) => {
