@@ -42,3 +42,17 @@ export function errorMessage(toast, message) {
     // transition: Bounce,
   });
 }
+
+export function infoMessage(toast, message) {
+  return toast.info(message, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    // transition: Bounce,
+  });
+}
