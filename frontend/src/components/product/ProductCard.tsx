@@ -30,7 +30,7 @@ const ProductCard: FC<any> = ({ item }) => {
           >
             {item?.id === item?.is_sold ? "Already sold" : "Buy"}
           </button>
-          <button className='text-slate-600' onClick={() => state?.handleDeleteProduct(item?.id)}>
+          <button className='text-slate-600' onClick={() => state?.handleDeleteProduct(item?.id, item?.name)}>
             <i className="fa-solid fa-trash fa-lg"></i>
           </button>
         </div>

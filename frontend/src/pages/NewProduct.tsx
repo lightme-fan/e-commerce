@@ -150,7 +150,7 @@ const NewProduct = () => {
                               handleInputChange(event, prod.name)
                             }
                             style={{ pointerEvents: prod.name === "picture" && product["picture"] && "none" }}
-                            placeHolder={prod?.name === "email" && ".+@example\.com"}
+                            placeHolder={prod?.name === "email" && ".+@example.com"}
                           />
                           {prod.name === "picture" && product["picture"] && (
                             <button

@@ -1,7 +1,7 @@
 import { createContext, FC, useEffect, useState } from "react";
 import { ContextProps, ContextProviderProps } from "../types";
 import axios from "axios";
-import { errorMessage, successMessage } from "../utils/utils";
+import { errorMessage, infoMessage, successMessage } from "../utils/utils";
 import { toast } from "react-toastify";
 
 const API_URL = "http://127.0.0.1:5000"
@@ -19,12 +19,16 @@ const initialContextValue: ContextProps = {
     location: "",
     email: ""
   },
+  productId: null,
   numberOfLikes: 0,
   isLiked: false,
   isBuyModalOpen: false,
   isAddProductModalOpen: false,
+  deleteModal: false,
   handleLikes: () => {},
   handleDeleteProduct: () => {},
+  handleConfirmDeleteProduct: () => {},
+  handleCancelDeleteProduct: () => {},
   handleBuy: () => {},
   handleCloseProductDetails: () => {},
   handleModalBuy: () => {},
@@ -91,11 +95,33 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     }
   }
 
-  const handleDeleteProduct = async (id: number) => {
-    await axios.delete(`${API_URL}/product/${id}`);
+  const handleDeleteProduct = (id: number, productName: string) => {
     setState(prev => prev && ({
       ...prev,
-      products: prev?.products?.filter(product => product?.id !== id)
+      deleteModal: true,
+      productId: id
+    }))
+  }
+
+  const handleConfirmDeleteProduct = async () => {
+    await axios.delete(`${API_URL}/product/${state?.productId}`);
+    const productToDelete = state?.products?.filter(product => product?.id !== state?.productId)
+    
+    setState(prev => prev && ({
+      ...prev,
+      products: prev?.products?.filter(product => product?.id !== prev?.productId),
+      deleteModal: false,
+      productId: null
+    }))
+    infoMessage(toast, "A produt has just been deleted!")
+  }
+
+  const handleCancelDeleteProduct = () => {
+    console.log("Deleting");
+    setState(prev => prev && ({
+      ...prev,
+      deleteModal: false,
+      productId: null
     }))
   }
 
@@ -140,12 +166,16 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
     products: state?.products,
     product: state?.product,
     productState: state?.productState,
+    productId: state?.productId,
     numberOfLikes: state?.numberOfLikes,
     isLiked: state?.isLiked,
     isBuyModalOpen: state?.isBuyModalOpen,
     isAddProductModalOpen: state?.isAddProductModalOpen,
+    deleteModal: state?.deleteModal,
     handleLikes: handleLikes,
     handleDeleteProduct: handleDeleteProduct,
+    handleConfirmDeleteProduct: handleConfirmDeleteProduct,
+    handleCancelDeleteProduct: handleCancelDeleteProduct,
     handleBuy: handleBuy,
     handleCloseProductDetails: handleCloseProductDetails,
     handleModalBuy: handleModalBuy,

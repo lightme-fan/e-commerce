@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from 'react'
 import { GeneralContext } from '../contexts/AppContext';
 import { Link } from 'react-router-dom';
-import { Header, ProductCard, ProductToBuy } from '../components';
+import { DeleteModal, Header, ProductCard, ProductToBuy } from '../components';
 
 const Home = () => {
   const state = useContext(GeneralContext);
@@ -9,7 +9,7 @@ const Home = () => {
 
   return (
     <Fragment>
-      <div className={`relative h-[100vh] ${state?.isBuyModalOpen && "opacity-15 overflow-y-hidden -z-10"} ${!state?.isBuyModalOpen && "overflow-y-scroll"}`}>
+      <div className={`relative h-[100vh] ${(state?.isBuyModalOpen || state?.deleteModal) && "opacity-15 overflow-y-hidden -z-10"} ${(!state?.isBuyModalOpen || !state?.deleteModal) && "overflow-y-scroll"}`}>
         <Header />
         <main>
           <section className='bg-[#f4f4f4] mt-[74px]'>
@@ -45,6 +45,9 @@ const Home = () => {
       </div>
       {state?.isBuyModalOpen && state?.product && (
         <ProductToBuy state={state} />
+      )}
+      {state?.deleteModal && (
+        <DeleteModal state={state} />
       )}
     </Fragment>
   )

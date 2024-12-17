@@ -34,12 +34,16 @@ export interface ContextProps {
   products: ProductType[] | null | undefined
   product: ProductType | null | undefined
   productState: ProductStateType | null | undefined
+  productId: any | null | undefined
   numberOfLikes: number | undefined
   isLiked: boolean | undefined
   isBuyModalOpen: boolean | undefined
   isAddProductModalOpen: boolean | undefined
+  deleteModal: boolean | undefined
   handleLikes: (item: number, id: number) => void
-  handleDeleteProduct: (id: number) => void
+  handleDeleteProduct: (id: number, productName: string) => void
+  handleConfirmDeleteProduct?: () => void
+  handleCancelDeleteProduct?: () => void
   handleBuy: (id: number) => void
   handleCloseProductDetails: (id: number) => void
   handleModalBuy: (id: number) => void
