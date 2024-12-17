@@ -70,8 +70,8 @@ def add_product():
     
     # Ensure all required fields are included
     required_fields = ['description', 'name', 'is_recommended', 'is_sold', 'location', 
-                        'number_of_likes', 'owner_address', 'owner_email', 'owner_name', 
-                        'payment_method', 'picture', 'price']
+                       'number_of_likes', 'owner_address', 'owner_email', 'owner_name', 
+                       'payment_method', 'picture', 'price']
     
     if not all(field in new_product_data for field in required_fields):
         return jsonify({'error': 'Missing required fields'}), 400
@@ -90,13 +90,24 @@ def add_product():
           new_product_data['is_sold'], new_product_data['location'], new_product_data['number_of_likes'],
           new_product_data['owner_address'], new_product_data['owner_email'], new_product_data['owner_name'],
           new_product_data['payment_method'], new_product_data['picture'], new_product_data['price']))
-
-    # Commit the transaction and close the connection
+    
     conn.commit()
+
+    # Retrieve all existing products dynamically
+    cursor.execute('SELECT * FROM products')
+    rows = cursor.fetchall()
+    
+    # Convert rows to a list of dictionaries
+    existing_products = [dict(row) for row in rows]
+
+    # Close the connection
     conn.close()
 
-    # Return a success response with the new product ID
-    return jsonify({'message': 'Product added successfully', 'id': cursor.lastrowid}), 201
+    # Return the updated list of products
+    return jsonify({
+        'message': 'Product added successfully',
+        'products': existing_products
+    }), 201
 
 
 if __name__ == '__main__':
