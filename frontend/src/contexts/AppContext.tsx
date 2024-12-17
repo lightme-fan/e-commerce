@@ -105,7 +105,6 @@ const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
 
   const handleConfirmDeleteProduct = async () => {
     await axios.delete(`${API_URL}/product/${state?.productId}`);
-    const productToDelete = state?.products?.filter(product => product?.id !== state?.productId)
     
     setState(prev => prev && ({
       ...prev,
