@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
-import { Header } from '../components'
+import { Footer, Header } from '../components'
 
 const Product = () => {
   return (
     <Fragment>
       <div className={`relative h-[100vh] overflow-y-scroll`}>
         <Header />
+        <Footer />
       </div>
     </Fragment>
   )

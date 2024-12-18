@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from 'react'
 import { GeneralContext } from '../contexts/AppContext';
 import { Link } from 'react-router-dom';
-import { DeleteModal, Header, ProductCard, ProductToBuy } from '../components';
+import { DeleteModal, Footer, Header, ProductCard, ProductToBuy } from '../components';
 
 const Home = () => {
   const state = useContext(GeneralContext);
@@ -11,8 +11,8 @@ const Home = () => {
     <Fragment>
       <div className={`relative h-[100vh] ${(state?.isBuyModalOpen || state?.deleteModal) && "opacity-15 overflow-y-hidden -z-10"} ${(!state?.isBuyModalOpen || !state?.deleteModal) && "overflow-y-scroll"}`}>
         <Header />
-        <main>
-          <section className='bg-[#f4f4f4] mt-[74px]'>
+        <main className='mt-[74px] mb-60'>
+          <section className='bg-[#f4f4f4]'>
             <div className='p-2 py-8 pb-28 max-w-screen-2xl m-auto'>
               <h1 className='text-center text-[56px] my-10 text-slate-600'>E-Commerce</h1>
               <p className='text-center text-xl text-slate-600 max-w-[510px] m-auto'>
@@ -20,7 +20,7 @@ const Home = () => {
               </p>
             </div>
           </section>
-          <section className='p-2 py-8 max-w-screen-2xl m-auto flex md:flex-col flex-col-reverse '>
+          <section className='p-2 py-8 mb-[74px] max-w-screen-2xl m-auto flex md:flex-col flex-col-reverse '>
             <Link
               to={"/new_product"}
               className='md:self-end self-center w-40 mt-2 py-2.5 hover:bg-blue-700 rounded-md bg-blue-500 text-white text-center'
@@ -42,6 +42,7 @@ const Home = () => {
             </div>
           </section>
         </main>
+        <Footer />
       </div>
       {state?.isBuyModalOpen && state?.product && (
         <ProductToBuy state={state} />

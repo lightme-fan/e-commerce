@@ -1,5 +1,5 @@
 import { Fragment, useContext, useState } from "react";
-import { Header, Input } from "../components";
+import { Footer, Header, Input } from "../components";
 import { capitalizeFirstLetter, checkEmptyValue, errorMessage } from "../utils/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { GeneralContext } from "../contexts/AppContext";
@@ -216,6 +216,7 @@ const NewProduct = () => {
             </Link>
           </div>
         </div>
+        <Footer />
       </div>
     </Fragment>
   );

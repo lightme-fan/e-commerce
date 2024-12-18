@@ -17,7 +17,7 @@ export function checkEmptyValue(obj) {
 
 export function successMessage(toast, message) {
   return toast.success(message, {
-    position: "top-right",
+    position: "top-center",
     autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: false,
@@ -25,13 +25,12 @@ export function successMessage(toast, message) {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    // transition: Bounce,
   });
 }
 
 export function errorMessage(toast, message) {
   return toast.error(message, {
-    position: "top-right",
+    position: "top-center",
     autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: false,
@@ -39,13 +38,12 @@ export function errorMessage(toast, message) {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    // transition: Bounce,
   });
 }
 
 export function infoMessage(toast, message) {
   return toast.info(message, {
-    position: "top-right",
+    position: "top-center",
     autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: false,
@@ -53,6 +51,5 @@ export function infoMessage(toast, message) {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    // transition: Bounce,
   });
 }
