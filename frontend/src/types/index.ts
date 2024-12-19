@@ -53,13 +53,13 @@ export interface ContextProps {
 
 export interface InputProps {
   type: string
-  id: string | undefined
+  id?: string | undefined
   name: string
-  label: string
+  label?: string
   error?: string | undefined | null
-  key: number | string | undefined | null
-  value: number | string | boolean | any | null
-  onChange: (event: any) => void
+  key?: number | string | undefined | null
+  value?: number | string | boolean | any | null
+  onChange?: (event: any) => void
   style?: any
   placeHolder?: any
 }
